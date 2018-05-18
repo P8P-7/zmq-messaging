@@ -1,6 +1,6 @@
 [submodule "third_party/foundation"]
 	path = third_party/foundation
-	url = git@github.com:P8P-7/foundation.git
+	url = git://github.com/P8P-7/foundation.git
 [submodule "third_party/proto"]
 	path = third_party/proto
-	url = git@github.com:P8P-7/proto.git
+	url = git://github.com/P8P-7/proto.git
