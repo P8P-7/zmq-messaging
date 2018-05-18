@@ -22,4 +22,6 @@ IF(NOT TARGET goliath-proto)
     target_link_libraries(goliath-proto ${PROTOBUF_LIBRARIES})
 ENDIF()
 
-add_subdirectory(foundation)
+IF(NOT TARGET goliath-foundation-module)
+    add_subdirectory(foundation)
+ENDIF()
