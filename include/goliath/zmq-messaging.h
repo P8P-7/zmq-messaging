@@ -11,6 +11,6 @@
  * @brief Module for receiving and sending messages
  */
 
-#include "../../src/zmq_io.h"
-#include "../../src/zmq_publisher.h"
-#include "../../src/zmq_subscriber.h"
+#include "zmq-messaging/zmq_io.h"
+#include "zmq-messaging/zmq_publisher.h"
+#include "zmq-messaging/zmq_subscriber.h"

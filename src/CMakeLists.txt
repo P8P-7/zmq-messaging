@@ -1,23 +1,12 @@
-set(SOURCES
+set(RELATIVE_SOURCES
         zmq_io.cpp
         zmq_publisher.cpp
         zmq_subscriber.cpp
         )
 
-add_library(${PROJECT_NAME} ${SOURCES})
+prepend(ABSOLUTE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR} ${RELATIVE_SOURCES})
 
-add_definitions(-DBOOST_LOG_DYN_LINK)
-
-include_directories(${Boost_INCLUDE_DIRS})
-
-target_link_libraries(${PROJECT_NAME}
-        PUBLIC
-            goliath-proto
-            goliath-foundation-module
-        PRIVATE
-            cppzmq
-            ${cppzmq_LIBRARY}
-            ${Protobuf_LIBRARY}
-            ${CMAKE_THREAD_LIBS_INIT}
-            ${Boost_LIBRARIES}
+set(SOURCES
+        ${ABSOLUTE_SOURCES}
+        PARENT_SCOPE
         )

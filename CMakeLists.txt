@@ -17,9 +17,29 @@ find_package(Boost ${BOOST_MIN_VERSION}
         )
         
 include(protobuf)
+include(prepend)
 
 add_subdirectory(third_party)
+add_subdirectory(include/goliath)
 add_subdirectory(src)
+
+add_library(${PROJECT_NAME} ${SOURCES} ${INCLUDES})
+
+add_definitions(-DBOOST_LOG_DYN_LINK)
+
+include_directories(${Boost_INCLUDE_DIRS})
+
+target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+            goliath-proto
+            goliath-foundation-module
+        PRIVATE
+            cppzmq
+            ${cppzmq_LIBRARY}
+            ${Protobuf_LIBRARY}
+            ${CMAKE_THREAD_LIBS_INIT}
+            ${Boost_LIBRARIES}
+        )
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC

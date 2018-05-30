@@ -1,4 +1,4 @@
-#include "zmq_io.h"
+#include <goliath/zmq-messaging/zmq_io.h>
 
 #include <iostream>
 

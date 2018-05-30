@@ -1,4 +1,4 @@
-#include "zmq_subscriber.h"
+#include <goliath/zmq-messaging/zmq_subscriber.h>
 
 #include <unistd.h>
 #include <functional>
