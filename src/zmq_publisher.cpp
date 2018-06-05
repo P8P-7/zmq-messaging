@@ -1,13 +1,14 @@
 #include <goliath/zmq-messaging/zmq_publisher.h>
 
 using namespace goliath::messaging;
+using namespace goliath;
 
 ZmqPublisher::ZmqPublisher(zmq::context_t &context, const std::string &host, const int port)
         : ZmqIo(context, host, port, ZMQ_PUB) {
     connect();
 }
 
-bool ZmqPublisher::publish(const MessageCarrier &carrier) {
+bool ZmqPublisher::publish(const proto::MessageCarrier &carrier) {
     try {
         std::string channel = std::to_string(carrier.message_case());
 

@@ -28,6 +28,6 @@ namespace goliath::messaging {
          * @param carrier Message
          * @return Status
          */
-        bool publish(const MessageCarrier& carrier) override;
+        bool publish(const proto::MessageCarrier& carrier) override;
     };
 }

@@ -6,9 +6,10 @@
 #include <boost/format.hpp>
 
 using namespace goliath::messaging;
+using namespace goliath;
 
 ZmqSubscriber::ZmqSubscriber(zmq::context_t &context, const std::string &host, const int port)
-        : ZmqIo(context, host, port, ZMQ_SUB) {
+    : ZmqIo(context, host, port, ZMQ_SUB) {
     connect();
     BOOST_LOG_TRIVIAL(info) << "Subscriber is listening to " << address();
 
@@ -17,10 +18,11 @@ ZmqSubscriber::ZmqSubscriber(zmq::context_t &context, const std::string &host, c
 
     // To use zmq_poll correctly, we construct this vector of poll items
     poll = {
-            { *interruptSocket, 0, ZMQ_POLLIN, 0 },
-            { socket,  0, ZMQ_POLLIN, 0 } // Polling on a ZMQ socket
+        {*interruptSocket, 0, ZMQ_POLLIN, 0},
+        {socket,           0, ZMQ_POLLIN, 0} // Polling on a ZMQ socket
     };
 }
+
 ZmqSubscriber::~ZmqSubscriber() {
     if (thread.joinable()) {
         stop();
@@ -29,7 +31,8 @@ ZmqSubscriber::~ZmqSubscriber() {
     delete interruptSocket;
 }
 
-void ZmqSubscriber::bind(const MessageCarrier::MessageCase &messageType, std::function<void(const MessageCarrier&)> callback) {
+void ZmqSubscriber::bind(const proto::MessageCarrier::MessageCase &messageType,
+                         std::function<void(const proto::MessageCarrier &)> callback) {
     if (callbacks.find(messageType) == callbacks.end()) {
         std::string topic = std::to_string(messageType);
         socket.setsockopt(ZMQ_SUBSCRIBE, topic.c_str(), topic.length());
@@ -81,10 +84,10 @@ void ZmqSubscriber::run() {
             //  Read message contents
             socket.recv(&data);
 
-            MessageCarrier carrier;
+            proto::MessageCarrier carrier;
             carrier.ParseFromArray(data.data(), static_cast<int>(data.size()));
 
-            if (carrier.message_case() != MessageCarrier::MESSAGE_NOT_SET) {
+            if (carrier.message_case() != proto::MessageCarrier::MESSAGE_NOT_SET) {
                 callbacks[carrier.message_case()](carrier);
             }
         }

@@ -17,8 +17,8 @@ namespace goliath::messaging {
      */
     class ZmqSubscriber : public ZmqIo {
     public:
-        using zmqMessageTopic = MessageCarrier::MessageCase;
-        using zmqMessageCallback = std::function<void(const MessageCarrier&)>;
+        using zmqMessageTopic = proto::MessageCarrier::MessageCase;
+        using zmqMessageCallback = std::function<void(const proto::MessageCarrier&)>;
 
         /**
          * @param context @see goliath::messaging::ZmqIo
